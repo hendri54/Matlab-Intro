@@ -27,7 +27,7 @@ Now try `open zeros`. This opens `zeros.m`.
 
 * this means: `zeros` is not written in Matlab (it's truly built-in)
 
-## The Matlab Path [mpath] ##
+## The Matlab Path <a name="mpath"></a> ##
 
 Matlab commands are stored in text files with the extension ''m''. 
 
@@ -86,19 +86,19 @@ There are 2 ways of ensuring this:
 	For this to work, the parent dir of `+plot_821`  must be on the `path`.	
 
 
-##Example of a Function
+## Example of a Function
 
 Imagine we want to compute the sum of 3 variables.
 
 Type the following code in a text editor: 
 
-````matlab
+```matlab
 function xSum = sum3(x1, x2, x3);
 % This function sums 3 variables
 	sum1 = x1 + x2;
 	xSum = sum1 + x3;
 end
-````
+```
 
 Save it as `sum3.m` in a directory Matlab knows to find.
 
@@ -125,13 +125,13 @@ Matlab complains that variable `sum1` does not exist.
 
 `sum1` was visible inside of sum3.m, but not outside of it.
 
-##More on Private Variables
+## More on Private Variables
 
-Variables inside of sum3.m are also not visible in functions called from within sum3.m
+Variables inside of `sum3.m` are also not visible in functions called from within `sum3.m`.
 
 **Example**
 
-Modify sum3.m to read: 
+Modify `sum3.m` to read: 
 
 ```matlab
 	function xSum = sum3(x1, x2, x3);
@@ -149,15 +149,15 @@ Then create the function:
 	end
 ```
 
-Running sum3.m results in an error: sum1 is not found.
+Running `sum3.m` results in an error: sum1 is not found.
 
-##Global Variables
+## Global Variables
 
-To make a variable visible from anywhere, define it as a global (in sum3.m and sum3sub.m): 
+To make a variable visible from anywhere, define it as a `global` (in `sum3.m` and `sum3sub.m`): 
 
 	global sum1;
 
-Now running sum3.m does not yield an error message.
+Now running `sum3.m` does not yield an error message.
 
 >Remark: Avoid globals where possible. 
 
@@ -177,9 +177,9 @@ Still, this can be very inefficient. If you pass a gigantic array to a function 
 
 There is no way of passing by reference.
 
-# Examples
+## Examples
 
-## Example: Cobb-Douglas production function
+### Example: Cobb-Douglas production function
 
 This is a general purpose [Cobb-Douglas function](https://github.com/hendri54/shared/blob/master/%2BeconLH/cobb_douglas.m)
 
@@ -193,7 +193,7 @@ Notable features:
 
 * self-test code governed by debugging switch `dbg`
 
-##Example: Finding the Zero of a Function
+### Example: Finding the Zero of a Function
 
 Task: Find the solution to the equation \\(f(x)=\ln(x)-5=0 \\).
 
@@ -213,7 +213,7 @@ Use the built-in function [`fzero`](http://www.mathworks.com/help/matlab/ref/fze
 	7.3891
 ```
 
-#Example: Two period household
+## Example: Two period household
 
 Household solves \\(\max u\left(c,g\right)\\)
 
@@ -227,7 +227,7 @@ that solve 2 budget constraints and Euler equation
 
 Assume \\(u\left(c,g\right)=\frac{c^{1-\sigma}}{1-\sigma}+\beta\frac{g^{1-\sigma}}{1-\sigma} \\)
 
-###Pseudo code
+### Pseudo code
 
 This is not a trivial program to write. So we break it down into trivial steps.
 
@@ -235,7 +235,7 @@ See [Tips on programming](programming.html)
 
 We design top-down.
 
-####Level 1:
+#### Level 1:
 
 Task: Find optimal \\(c\\).
 
@@ -245,7 +245,7 @@ Task: Find optimal \\(c\\).
 
 > Note: Usually one would not restrict \\(c\\) to lie on a grid.
 
-####Level 2:
+#### Level 2:
 
 Task: Calculate deviation from Euler equation.
 
@@ -254,14 +254,14 @@ Given: guess for \\(c\\), parameter values
 1. Use budget constraints to calculate \\(s,g\\)
 2. Return deviation: \\( dev=u_{c}-u_{g}R \\)
 
-####Level 3:
+#### Level 3:
 
 Utility function.
 
 * Return \\(u_{c} \\) and \\(u_{g} \\)
 * for given \\(c,g\\) and parameters.
 
-###Code
+### Code
 
 We write the code bottom up.
 
