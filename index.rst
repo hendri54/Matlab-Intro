@@ -19,6 +19,7 @@ Contents:
    matlab_oddities
    matlab_plots
    matlab_exercises
+   project_code_organization
 
 
 
@@ -26,5 +27,4 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

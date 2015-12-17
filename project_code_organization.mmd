@@ -1,0 +1,26 @@
+# Organizing Code for a Complex Model #
+
+## Setting Parameters ##
+
+The problem: one typically solves several versions of a model. How to ensure that all the right fixed / calibrated parameters are set for each version?
+
+Example: A model is solved with different production functions, say Cobb-Douglas or CES.
+
+Here is a possible workflow:
+
+1. Assign each model version a number.
+2. Write a file that sets "named" choices for each model version.
+	1. E.g.: `cS.prodFct = 'CES'`
+3. For each named choice, define an `object` with the properties / methods:
+	1. provide a list of all potentially calibrated parameters (in my code, these would be `pstructLH` objects)
+	2. provide methods that are needed to solve the model (e.g.: return marginal products etc)
+4. Collect all potentially calibrated parameters into a `pvectorLH` object
+	1. This can make a vector of guesses that can be passed into optimization functions (such as `fmincon`)
+	2. It can take the `guess` vector and transform it into the parameters to be calibrated
+	3. For model objects that can be swapped out, simply question the object to get a list of all parameters it needs.
+5. In the model solution code, you don't need to know what kind of production function is used. Key is that all of them have the same methods.
+
+Now, to solve the model with a different production function, simply call the constructor for the appropriate object. The rest is automatic.
+
+
+
