@@ -1,7 +1,5 @@
 # Matlab: Introduction #
 
-[link](matlab_exercises.html#growth-model)
-
 ## Installation and Configuration
 
 Instructions for installation from [ITS](http://software.sites.unc.edu/software/)
@@ -50,10 +48,12 @@ It is easy to learn and use.
 
 * The main reason is that Matlab is *dynamically typed*. That is, a variable can change type as it is modified.
 * Arguments are passed to functions without declaring their types. 
+* The documentation is outstanding.
 
 Matlab has a large standard library.
 
 * But there is little (high quality) user contributed code.
+* Most of it lives on the [Matlab file exchange](http://www.mathworks.com/matlabcentral/fileexchange/). But this is not curated in any way. Use at your own risk.
 
 ### Matlab Cons ##
 
@@ -67,9 +67,9 @@ In the command window, type your commands at the `>>` prompt.
 
 Matlab returns the answers on the screen.
 
-####Example 
+**Example**
 
-	date
+	>> date
 	ans =
 	26-Jul-2015
 
@@ -83,13 +83,14 @@ Its return value is shown on the screen after `ans =`.
 
 To get rid of the `ans =` part, we could use `disp(date)`.
 
-####Example 
+**Example**
 
-	dateString = date;
-	disp(dateString);
+	>> dateString = date;
+	>> disp(dateString);
 	26-Jul-2015
 
 >Note: Matlab displays the result of any command, unless the command is ended with `;`.
+
 >If you ever see a lot of numbers appearing on the screen "out of nowhere," you probably forgot the `;` at the end of a line.
 
 ##Doing Math

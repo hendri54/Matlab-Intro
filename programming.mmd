@@ -16,7 +16,7 @@ Write your code [*top down by stepwise refinement*](http://www.eecs.wsu.edu/~cs1
 
 * Start with an outline of the steps.
 * For each step:
-	* if it's trivial: write it out in *pseudo code*.
+	* if it's trivial: write it out in [pseudo code](https://en.wikipedia.org/wiki/Pseudocode).
 	* it it's not: write another outline for that step
 * Finally, translate the pseudo code into code.
 
@@ -35,14 +35,14 @@ Read a good book on best practices in programming.
 1.  I see a lot of very poorly written code that is impossible to understand and not robust. Do yourself a favor and save a lot of time down the road by learning to how write quality code.
 2.  A book I like is "Writing Solid Code."
 
-##Some rules
+## Some rules
 
-1.  No literals as in "x=zeros([5,3])" or for "i1 = 1 : 57". It's not robust and hard to read.
+1.  No literals as in `x=zeros([5,3])` or for `i1 = 1 : 57`. It's not robust and hard to read.
 2.  No global variables.
 3.  Don't worry about speed. Worry about robustness and transparency.
-4.  Unique names: I suffix all functions I write with a project code (e.g. var_load_sc.m, var_save_sc.m, etc). It avoids naming conflicts with other projects.
+4.  Unique names: I suffix all functions I write with a project code (e.g. `var_load_sc.m`, `var_save_sc.m`, etc). It avoids naming conflicts with other projects.
 5.  Your code should contain lots of self-testing code. Most code is so fast that the loss of speed is irrelevant. If it is relevant, have a  switch that globally switches test code on and off.
-6.  Avoid using reserved words, in particular "i" as an index.
+6.  Avoid using reserved words, in particular `i` as an index.
 
 ### Style matters
 
@@ -77,11 +77,13 @@ Related to this: do not hard-code *functional forms*.
 
 If you want to compute the marginal product of capital, write a function for it. Otherwise, if you want to switch from Cobb-Douglas to CES, you have to rewrite all your programs.
 
+* [Object oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming) makes it easy to swap out entire parts of a model. We will talk about this later.
+
 ### Self-Test Code ##
 
 Your code should test itself automatically and periodically.
 
-Embed error catching code everywhere (`validateattributes`).
+Embed error catching code everywhere (use [valideattributes](http://www.mathworks.com/help/matlab/ref/validateattributes.html)).
 
 Catching bugs early makes them easier to find.
 
@@ -119,13 +121,13 @@ It turns out that it spends 80% of its time running the Matlab interpolation fun
 
 There is little point optimizing the rest of the code.
 
-To find out what makes your program slow, run the Matlab **Profiler** (help profile).
+To find out what makes your program slow, run the Matlab [profiler](http://www.mathworks.com/help/matlab/ref/profile.html).
 
 Some of Matlab's built-in functions are extremely slow. 
 
-Two examples are `interp1` and `sub2ind`. 
-
-It is easy to write replacements that run ten times faster.
+* Two examples are `interp1` and `sub2ind`. 
+* It is easy to write replacements that run ten times faster.
+* The [Lightspeed](http://research.microsoft.com/en-us/um/people/minka/software/lightspeed/) library contains faster versions of built-in functions.
 
 ## Common mistakes
 
@@ -144,7 +146,7 @@ To avoid this: check that inputs have admissible values.
 Matlab permits to omit input or output arguments when calling a function. 
 
 It is useful to check that the number of input arguments is as expected
-using `nargin}.
+using [nargin](http://www.mathworks.com/help/matlab/ref/nargin.html).
 
 ### Reusing variable names.
 
@@ -158,7 +160,7 @@ especially true for code that wraps a loop into a single line of code.
 
 For example, this is easy to read:
 
-````
+````matlab
 for ix = 1 : nx
   zV(ix) = xV(ix+2) + yV(nx + 2 - ix);
 end
