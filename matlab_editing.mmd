@@ -3,22 +3,23 @@
 ## The Editor
 
 Matlab has a built-in editor.
+
 Benefit: Integration with the command processor.
 When a crash occurs, you can inspect variables in the editor.
 
 ### Editor Tips ###
 
-Cell mode
+[Cell mode](http://www.mathworks.com/help/matlab/matlab_prog/run-sections-of-programs.html)
 
 * Start a line with `%%` and it becomes a collapsible `cell`. That makes moving around the editor easier.
+* One can do other things with cells (e.g., run a portion of code; collapse it; etc.)
 
 Comments
 
 * Use **lots** of comments to make your code readable.
-
 * Block comments are enclosed with `%{...%}`
 
-Mlint
+[Mlint](http://www.mathworks.com/help/matlab/matlab_prog/check-code-for-errors-and-warnings.html)
 
 * highlights questionable syntax or errors
 
@@ -26,18 +27,18 @@ Mlint
 
 Debugging means locating program errors.
 
-####keyboard command
+#### `keyboard` command
 
-A useful command for debugging is `keyboard`. 
+A useful command for debugging is [keyboard](www.mathworks.com/help/matlab/ref/keyboard.html).
 It halts program execution and returns the user to the command line. 
 Any commands can then be executed as if the program itself contained those commands. 
 In particular, one can inspect the values of all local variables.
-Setting **break points**  has a similar effect.
 
-####Debugging mode
+Setting [break points](http://www.mathworks.com/help/matlab/matlab_prog/debugging-process-and-features.html)  has a similar effect.
 
-Matlab can switch to a debugging mode that allows the user to inspect the
-state of a program when it crashes. 
+#### Debugging mode
+
+Matlab can switch to a debugging mode that allows the user to inspect the state of a program when it crashes. 
 
 To switch on debugging mode, type `dbstop error`
 
@@ -54,6 +55,8 @@ This stops the program.
 Write **test functions** for every sub-routine you write. 
 Never assume that a new program will run correctly.
 
+Write a `test_all` functions that runs all the tests in one go.
+
 Embed **self-test code** in your programs. 
 
 #### Check everything you can. 
@@ -66,7 +69,6 @@ Embed **self-test code** in your programs.
 
 By checking all the time, errors are spotted as early as possible which makes them much easier to fix.
 
-See `validateattributes` for an easy way of implementing all of this.
-
+See [validateattributes](www.mathworks.com/help/matlab/ref/validateattributes.html) for an easy way of implementing all of this.
 
 ---------------

@@ -14,16 +14,16 @@ These are really vectors of characters to Matlab.
 
 Then there are more specialized datatypes such as `tables`.
 
-You can also define your own data types. We will talk about that more later (object oriented programing).
+You can also define your own data types. We will talk about that more later (see [object oriented programming][oop]).
 
 The type of a variable is **not fixed**.
+
+The following is perfectly fine code (and a popular source of errors).
 
 ```matlab
 	a = 1;
 	a = 'a string';
 ```
-
-is perfectly fine code (and a popular source of errors).
 
 ## Vectors
 
@@ -94,6 +94,14 @@ Then there is [logical indexing](http://blogs.mathworks.com/steve/2008/01/28/log
 ```
 
 See also the [find](http://www.mathworks.com/help/matlab/ref/find.html) function for a similar idea.
+
+#### Exercises ####
+
+Start with `x = 1 : 3 : 30`.
+
+1. Find all even elements.
+2. Find all elements between 5 and 20.
+3. Set all even elements to their negative values.
 
 ## Matrices
 
@@ -202,9 +210,18 @@ Sub-matrices work just like ordinary 2-dimensional matrices.
 
 But: `a(:,1,:)` is not a 2D matrix. It's a 3D matrix with a singleton 2nd dimension.
 
+### Matrix Exercises ###
+
+1. Construct a matrix `A` with elements `[2,4,...,20]` in row 1 and `[1,4,7,...,28]` in row 2.
+2. Replace row 1 with its square.
+3. Find all columns where row 1 > row 2.
+4. Let `x=ones(10,1)`. Compute `Ax`.
+
 ## Structures
 
 Structures are containers for variables of different types.
+
+They are defined by simply adding element to a blank structure.
 
 #### Example:
 
@@ -214,8 +231,6 @@ Store the contact information for a person.
 	contactS.Name = 'John Doe';
 	contactS.Age = 37;
 ```
-
-A structure is defined by assigning values to it.
 
 The elements are accessed by name: 
 
@@ -342,4 +357,5 @@ uint8
 
 > Rule of thumb: Store large datsets in low precision. Make everything double the moment you load it.
 
------------
+
+[oop]: oop.html

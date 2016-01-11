@@ -1,15 +1,17 @@
 # Matlab: Functions and Scripts
 
-**Scripts** are simply collections of commands that are run as if they were typed at the command prompt.
+[Scripts](http://www.mathworks.com/help/matlab/matlab_prog/create-scripts.html) are simply collections of commands that are run as if they were typed at the command prompt.
 
-* They are rarely used b/c their contents is not *encapsulated*.
+* They are rarely used b/c their contents is not [encapsulated](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)).
+* Any variables defined in a script show up in the [global workspace](http://www.mathworks.com/help/matlab/ref/global.html).
+* In the section on [structured programming](programming.html#structured-programming), we talk about why this is bad.
 
-**Functions** are similar to scripts with one crucial difference:
+[**Functions**](http://www.mathworks.com/help/matlab/ref/function.html) are similar to scripts with one crucial difference:
 
 * All variables inside a function are **private**.
 * Other functions cannot see the variables inside a function (*encapsulation*).
 * Any variable a function should know must be passed to it as an input argument.
-* Any variable to be retained after the function finishes must be passd out of it as a return argument. 
+* Any variable to be retained after the function finishes must be passed out of it as a return argument. 
 
 > Always use functions, never scripts!
 
@@ -29,7 +31,7 @@ Now try `open zeros`. This opens `zeros.m`.
 
 ## The Matlab Path <a name="mpath"></a> ##
 
-Matlab commands are stored in text files with the extension ''m''. 
+Matlab commands are stored in text files with the extension `m`. 
 
 When the user issues a command, such as `m = zeros([3,4]))`, Matlab searches
 for a matching m-file, in this case `zeros.m` and runs it. 
@@ -43,7 +45,7 @@ In case you wonder, this is done as a `cell array` of strings.
 
 You can see what's on the path by typing `path`.
 
-You add directories to the path with `addpath`.
+You add directories to the path with [addpath](http://www.mathworks.com/help/matlab/ref/addpath.html).
 
 In addition, Matlab searches the current directory (the one shown in the file browser).
 
@@ -51,7 +53,7 @@ Therefore, every time you write new code, you need to put the directories on the
 
 There is no way to allow one function to access some code without changing the `path` globally. This differs from other languages. It makes it hard to organize code.
 
-Every project therefore needs a startup routine that adds its directory to the Matlab path.
+Every project therefore needs a **startup routine** that adds its directory to the Matlab path.
 Or its program files need to be placed in the current working directory.
 
 ## Organizing Code ##
@@ -67,9 +69,9 @@ Then switch the current directory to that directory using `cd`.
 2. For files that are **shared** between several projects, place them in a special directory (`blah/shared`).
 Place this directory on the path: `addpath('blah/shared')` .
 
-Over time you will write many general purpose routines that should be stored in this `shared` directory.
+Over time you will write many general purpose routines that should be stored in this `shared` directory. Reusable code!
 
-#### Name Conflicts ####
+### Name Conflicts ###
 
 Now you run into a problem: **name conflicts**.
 
@@ -81,9 +83,11 @@ There are 2 ways of ensuring this:
 
 	Such as `plot_821.m`
 
-2. Packages: If you place an m-file into a directory that starts with `+`, let's say `+plot_821`, you can access it like this: `plot_821.plot(x)`.
+2. Packages: If you place an m-file into a directory that starts with `+`, let's say `+econ821`, you can access it like this: `econ821.plot(x)`.
 
-	For this to work, the parent dir of `+plot_821`  must be on the `path`.	
+	For this to work, the parent dir of `+econ821`  must be on the `path`.	
+
+	This is also useful to organize your code within a project (which may contain hundreds of functions).
 
 
 ## Example of a Function
@@ -219,7 +223,7 @@ Household solves \\(\max u\left(c,g\right)\\)
 
 subject to \\(y=c+s \\) and \\(g=z+sR\\)
 
-A solution: \\(c,g,s\\)
+A solution: $c,g,s$
 
 that solve 2 budget constraints and Euler equation
 
@@ -314,5 +318,19 @@ function hh_x1(y, z, R, bb, sig)
 	disp(sprintf('c = %f   Dev = %f', cGridV(idxMin), devMin));
 end
 ```
+
+## Exercises ##
+
+1. Write a CES utility function that computes $u'(c)$ and $u(c)$.
+2. Write a function that computes the inverse of $u'(c)$.
+3. Write a test function that checks properties of the utility function:
+	4. The inverse of the inverse equals $u'(c)$.
+	5. Marginal utility is decreasing.
+
+Extra credit: 
+
+1. Package all of that into an object (a user defined data type).
+2. Now write all of this for $u(c)=e^{-\phi c}$.
+3. In your test function, set things up so that you only need to change a single line of code to test both utility functions (the benefit of OOP in action).
 
 ----------
