@@ -1,0 +1,41 @@
+# Object Oriented Programming (OOP) #
+
+## The Idea ##
+
+OOP takes structured programming to the next level. Structured programming encapsulates local data in a function. The user does not need to know anything about the function other than the interface (inputs and outputs).
+
+OOP recognizes that some groups of functions "hang together" because they operate on the same object. One idea is to group these functions together.
+
+The second idea is that certain persistent data "belong to" an object. They should only be manipulated by functions that also "belong to" the object.
+
+OOP therefore bundles data (called `properties`) and functions (called `methods`) together.
+
+### Example: Utility function  ###
+
+$u(c,l) = c ^ (1-\sigma) / (1-\sigma) + \phi \log(l)$
+
+Persistent data include: parameters ($\sigma, \phi$).
+
+Methods include: compute $u_{c}$, $u(c,l)$, inverse marginal utility, indifference curves
+
+## Benefits ##
+
+There is nothing that OOP can do that could not be done without OOP. The benefits lie in code organization.
+
+The programmer sees all methods that operate on the object in one place. That makes it easier to 
+
+* test the code
+* modify the code
+* ensure consistency
+
+Since all code is in one place, it is easy to swap out.
+
+Imagine you want to compute a model with different utility functions. With OOP, all you need to do is swap out the utility function object. Ideally, the other code remains unchanged.
+
+## References ##
+
+Matlab documentation on [object oriented programming](http://www.mathworks.com/help/matlab/object-oriented-programming.html).
+
+---------
+
+
