@@ -19,9 +19,9 @@ Contents:
    matlab_oddities
    matlab_plots
    matlab_exercises
+   oop
    project_code_organization
-	oop
-
+   
 
 Indices and tables
 ==================

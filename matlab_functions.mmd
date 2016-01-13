@@ -96,7 +96,7 @@ Now try `open zeros`. This opens `zeros.m`.
 
 The Matlab [path](www.mathworks.com/help/matlab/ref/path.html) determines which m-files are visible in the global namespace (and inside all functions).
 
-In contrast to other languages, this is an all or nothing affair: If a function is visible somewhere, it is visible everywhere. (Local functions and nested functions are the exceptions.)
+In contrast to other languages, this is an all or nothing affair: If a function is visible somewhere, it is visible everywhere.
 
 When the user issues a command, such as `m = zeros([3,4]))`, Matlab searches for a matching m-file, in this case `zeros.m` and runs it. 
 
@@ -116,6 +116,8 @@ In addition, Matlab searches the current directory (the one shown in the file br
 Therefore, every time you write new code, you need to put the directories on the `path` before the code can be called.
 
 There is no way to allow one function to access some code without changing the `path` globally. This differs from other languages. It makes it hard to organize code.
+
+There is one exception: [local functions](http://www.mathworks.com/help/matlab/matlab_prog/local-functions.html) are only visible to functions within the same m-file.
 
 ## Organizing Code ##
 

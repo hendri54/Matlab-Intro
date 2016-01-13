@@ -12,11 +12,11 @@ OOP therefore bundles data (called `properties`) and functions (called `methods`
 
 ### Example: Utility function  ###
 
-$u(c,l) = c ^ (1-\sigma) / (1-\sigma) + \phi \log(l)$
+\\(u(c,l) = c ^ (1-\sigma) / (1-\sigma) + \phi \log(l)\\)
 
-Persistent data include: parameters ($\sigma, \phi$).
+Persistent data include: parameters (\\(\sigma, \phi\\)).
 
-Methods include: compute $u_{c}$, $u(c,l)$, inverse marginal utility, indifference curves
+Methods include: compute \\(u_{c}, u(c,l)\\), inverse marginal utility, indifference curves.
 
 ## Benefits ##
 
@@ -31,6 +31,14 @@ The programmer sees all methods that operate on the object in one place. That ma
 Since all code is in one place, it is easy to swap out.
 
 Imagine you want to compute a model with different utility functions. With OOP, all you need to do is swap out the utility function object. Ideally, the other code remains unchanged.
+
+## Examples From My Library ##
+
+[CRRA utility](https://github.com/hendri54/shared/blob/master/UtilCrraLH.m)
+
+[CES production function](https://github.com/hendri54/shared/blob/master/ces_lh.m)
+
+[Enum](https://github.com/hendri54/shared/blob/master/EnumLH.m) data type.
 
 ## References ##
 
