@@ -2,25 +2,27 @@
 
 Try the exercises at [Quantitative Economics](www.http://quant-econ.net).
 
-Some of the code for these exercises is in the `examples` folder on `github`.
+Some of the code for these exercises is in the `examples` folder in [my github repo][githubLH].
+
+Some of my general purpose reusable code is posted in the `shared` folder in [my github repo][githubLH].
 
 ## Read the Matlab documentation on the following subjects:
 
-* Data types: matrices, strings, structures.
+* [Data types](www.mathworks.com/help/matlab/data-types_data-types.html): matrices, strings, structures.
 
-* Indexing to access matrix elements.
+* [Indexing](www.mathworks.com/.../matrix-indexing-in-matlab.html) to access matrix elements.
 
-* Operators: `*,.*,/,./`
+* [Operators](http://www.mathworks.com/help/matlab/operators-and-elementary-operations.html): `*,.*,/,./`
 
-* String handling: `sprintf`
+* [String handling](http://www.mathworks.com/help/matlab/ref/strings.html): [sprintf](www.mathworks.com/help/matlab/ref/sprintf.html)
 
-* Loops: while, for.
+* [Loops](http://www.mathworks.com/help/matlab/matlab_prog/loop-control-statements.html): while, for.
 
-* Functions: input/output arguments, global/local variables.
+* [Functions](http://www.mathworks.com/help/matlab/function-basics.html): input/output arguments, global/local variables.
 
-* Optimization: fzero, fsolve, optimset.
+* [Optimization](www.mathworks.com/products/optimization): fzero, fsolve, optimset.
 
-* Graphics: plot.
+* [Graphics](www.mathworks.com/products/matlab/matlab-graphics): plot.
 
 ## Getting Started ##
 
@@ -30,7 +32,7 @@ Some of the code for these exercises is in the `examples` folder on `github`.
 
 	Output: mean and standard deviation for each column
 
-	My solution: `statsLH.std_w`
+	[My solution](https://github.com/hendri54/shared/blob/master/%2BstatsLH/std_w.m)
 		
 1. Compute the cdf for weighted data.
 
@@ -38,11 +40,11 @@ Some of the code for these exercises is in the `examples` folder on `github`.
 	
 	Output: cumulative percentiles and their values
 	
-	My solution: `distrib_lh.cdf_weighted`
-
+	[My solution](https://github.com/hendri54/shared/blob/master/%2BdistribLH/cdf_weighted.m)
+	
 1. Compute points at the percentile distribution for weighted data (e.g. median)
 
-	My solution: `distrib_lh.pcnt_weighted`
+	[My solution](https://github.com/hendri54/shared/blob/master/%2BdistribLH/pcnt_weighted.m)
 
 ## Root finding
 
@@ -66,6 +68,8 @@ Consider a growth model given by the Bellman equation
 
 \\(V(k) = \max u(c) + \beta V(f(k) - c) \\)
 
+with \\(f(k) = k^\alpha\\).
+
 Solve the growth model by value function iteration.
 
 Steps:
@@ -78,7 +82,7 @@ Along the way, plot the value functions to show how they converge to the true on
 
 ![GrowthValueIter](figures/growth_value_iter.png "Value function iteration")
 
-See [QuantEcon](http://quant-econ.net/jl/dp_intro.html).
+See [QuantEcon](http://quant-econ.net/jl/dp_intro.html) and my [Matlab solution](https://github.com/hendri54/Econ821/blob/master/matlab_examples/growth_model_821.m).
 
 ## Useful exercises from [QuantEcon](http://quant-econ.net)
 
@@ -86,7 +90,7 @@ See [QuantEcon](http://quant-econ.net/jl/dp_intro.html).
 
 	Given: probability of each state
 
-	My solution: `random_lh.rand_discrete`
+	[My solution](https://github.com/hendri54/shared/blob/master/%2BrandomLH/rand_discrete.m)
 
 1. Simulate a Markov Chain
 
@@ -94,7 +98,7 @@ See [QuantEcon](http://quant-econ.net/jl/dp_intro.html).
 
 	Also compute the stationary distribution
 
-	My solution: `markov_lh.markov_sim`
+	[My solution](https://github.com/hendri54/shared/blob/master/%2BmarkovLH/markov_sim.m)
 
 	Also try their Exercise 1 (illustrate the central limit theorem).
 
@@ -104,12 +108,14 @@ See [QuantEcon](http://quant-econ.net/jl/dp_intro.html).
 
 	You will see that the syntax is very similar.
 
-	My solution: `+ar1_lh/tauchen`
-	
+	[My solution](https://github.com/hendri54/shared/blob/master/%2Bar1LH/tauchen.m)
+		
 2. Simulate random variables to illustrate the Law of Large Numbers and the Central Limit Theorem.
 
 	See [QuantEcon](http://quant-econ.net/jl/lln_clt.html) for the setup and Julia code.
 	
-	My solution: `matlab_examples/clt_illustrate`
+	[My solution](https://github.com/hendri54/Econ821/blob/master/matlab_examples/clt_illustrate_821.m)
 
 ------------------------
+
+[githubLH]: https://github.com/hendri54

@@ -1,40 +1,104 @@
-# Matlab: Functions and Scripts
+# Functions and Scripts #
+
+## Encapsulation ##
+
+A key idea of [structured programming](programming.html#structured-programming): 
+
+* package code into self-contained functions
+* avoid side effects
+
+A function should only change the rest of the world through the outputs it explicitly returns. This is called [encapsulation][encaps].
+
+For this to work, all variables inside a function must be invisible to other code -- they are **local**.
+
+### Example:
+
+```matlab
+function y = f(x)
+	a = 5;
+	y = x + a;
+end
+
+% Command line:
+>> a = 3; y = f(0); disp(y)
+5
+>> disp(a)
+3
+% Now the converse
+function y = g(x)
+	z = x + a;
+end
+>> g(0)
+% Error: `a is not defined`
+```
+
+## Namespaces ##
+
+A [namespace](https://en.wikipedia.org/wiki/Namespace) is a set of functions or scripts that can "see" the same objects.
+
+Example: 
+
+* In the function `f(x)` above, `a`  was in `f(x)`'s namespace, but not in `g(x)`'s.
+* Conversely, the `a` inside `f(x)` is local and not in the command line's namespace.
+
+In Matlab, there are only 2 namespaces:
+
+1. Global: this is what you can access from the command line.
+2. Local: inside a function.
+
+Note: This is not exactly true because there are [nested functions][nested].
+
+This means in particular that all global variables and all functions are visible everywhere. Their names must be unique.
+
+Other languages have more control over namespaces (using "modules").
+
+## Functions versus Scripts
 
 [Scripts](http://www.mathworks.com/help/matlab/matlab_prog/create-scripts.html) are simply collections of commands that are run as if they were typed at the command prompt.
 
-* They are rarely used b/c their contents is not [encapsulated](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)).
-* Any variables defined in a script show up in the [global workspace](http://www.mathworks.com/help/matlab/ref/global.html).
-* In the section on [structured programming](programming.html#structured-programming), we talk about why this is bad.
+Scripts run in the [global][] workspace. This is, generally speaking, not good. They create side effects.
 
-[**Functions**](http://www.mathworks.com/help/matlab/ref/function.html) are similar to scripts with one crucial difference:
+Rule of thumb:
+
+> Always use functions, never scripts!
+
+[Functions](http://www.mathworks.com/help/matlab/ref/function.html) are similar to scripts with one crucial difference:
 
 * All variables inside a function are **private**.
 * Other functions cannot see the variables inside a function (*encapsulation*).
 * Any variable a function should know must be passed to it as an input argument.
 * Any variable to be retained after the function finishes must be passed out of it as a return argument. 
 
-> Always use functions, never scripts!
-
 An important principle of structured programming: 
 
 >**Package a well-defined task into a function with a simple interface.**
 
-Even built-in Matlab commands are often written in Matlab.
+A function looks like this
+
+```matlab
+function [y1, y2] = fname(x1, x2)
+	% Do stuff with x1 and x2 to generate y1 and y2
+end
+```
+
+This would be stored in a text file called `fname.m`.
+
+A side note: Even built-in Matlab commands are often written in Matlab.
 
 Try `open sub2ind`. You get to see (and you can modify) the source code for the built-in `sub2ind`  command (`sub2ind.m`).
 
 Now try `open zeros`. This opens `zeros.m`. 
 
 * you get an m-file that is blank except for comments
-
 * this means: `zeros` is not written in Matlab (it's truly built-in)
 
-## The Matlab Path <a name="mpath"></a> ##
+## The Matlab Path <a Name="Mpath"></A> ##
 
-Matlab commands are stored in text files with the extension `m`. 
+The Matlab [path](www.mathworks.com/help/matlab/ref/path.html) determines which m-files are visible in the global namespace (and inside all functions).
 
-When the user issues a command, such as `m = zeros([3,4]))`, Matlab searches
-for a matching m-file, in this case `zeros.m` and runs it. 
+In contrast to other languages, this is an all or nothing affair: If a function is visible somewhere, it is visible everywhere. (Local functions and nested functions are the exceptions.)
+
+When the user issues a command, such as `m = zeros([3,4]))`, Matlab searches for a matching m-file, in this case `zeros.m` and runs it. 
 
 It does not matter whether `zeros` is a built-in command or an m-file written by a user.
 
@@ -53,9 +117,6 @@ Therefore, every time you write new code, you need to put the directories on the
 
 There is no way to allow one function to access some code without changing the `path` globally. This differs from other languages. It makes it hard to organize code.
 
-Every project therefore needs a **startup routine** that adds its directory to the Matlab path.
-Or its program files need to be placed in the current working directory.
-
 ## Organizing Code ##
 
 When you write new commands, you need to make sure Matlab can find them. 
@@ -64,7 +125,7 @@ This is best accomplished in two ways:
 1. For files that belong to the one particular project, place them in a project directory.
 Then switch the current directory to that directory using `cd`.
 
-	Or put the directory on the `path`	
+	Or put the directory on the `path`	using a startup routine.
 
 2. For files that are **shared** between several projects, place them in a special directory (`blah/shared`).
 Place this directory on the path: `addpath('blah/shared')` .
@@ -83,7 +144,7 @@ There are 2 ways of ensuring this:
 
 	Such as `plot_821.m`
 
-2. Packages: If you place an m-file into a directory that starts with `+`, let's say `+econ821`, you can access it like this: `econ821.plot(x)`.
+2. [Packages](http://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html): If you place an m-file into a directory that starts with `+`, let's say `+econ821`, you can access it like this: `econ821.plot(x)`.
 
 	For this to work, the parent dir of `+econ821`  must be on the `path`.	
 
@@ -169,6 +230,28 @@ Now running `sum3.m` does not yield an error message.
 
 >Globals create confusion.
 
+## Nested Functions ##
+
+If you need a function to see the local variables in another function, [nest][nested] it inside the other function.
+
+Example:
+
+```matlab
+function f
+	a = 5;
+	disp(g(17));
+	% After calling g(), a == 52
+
+	% Nested function can see `a`
+	function z = g(x)
+		z = x + a;
+		a = 52;
+	end
+end
+```
+
+The main use of this: optimization. See below.
+
 ## Passing by Value ##
 
 In Matlab, all function arguments are passed **by value**.
@@ -217,13 +300,17 @@ Use the built-in function [`fzero`](http://www.mathworks.com/help/matlab/ref/fze
 	7.3891
 ```
 
+What if I want to pass additional parameters to the objective function? Make it a [nested function][nested].
+
+Example [here](https://github.com/hendri54/Econ821/blob/master/matlab_examples/root_find_821.m).
+
 ## Example: Two period household
 
 Household solves \\(\max u\left(c,g\right)\\)
 
 subject to \\(y=c+s \\) and \\(g=z+sR\\)
 
-A solution: $c,g,s$
+A solution: \\(c,g,s\\)
 
 that solve 2 budget constraints and Euler equation
 
@@ -267,70 +354,39 @@ Utility function.
 
 ### Code
 
-We write the code bottom up.
+We write the [code](https://github.com/hendri54/Econ821/blob/master/matlab_examples/hh_example_821.m) bottom up.
 
 Utility function:
-Allow matrix inputs (cM, gM).
-Parameters as arguments. 
+
+* Allow matrix inputs (cM, gM).
+* Parameters as arguments. 
+* This should really be a general purpose function (my library contains an [OOP version](https://github.com/hendri54/shared/blob/master/UtilCrraLH.m)).
+
+Sample call:
 
 ```matlab
-function [ucM, ugM] = ces_util_x1(cM, gM, bb, sig);
-% CES marginal utility when young, old
-	uM = (cM .^ (1-sig) + bb .* gM .^ (1-sig)) ./ (1-sig);
-	ucM = (1-sig) .* uM ./ cM;
-	ugM = (1-sig) .* uM ./ gM;
-end
-```
-
-Deviation function:
-
-```matlab
-function dev = ee_dev_x1(c, y, z, R, bb, sig);
-% EE deviation
-% Get s, g from budget constraints
-	s = y - c;
-	g = z + R .* s;
-	if g <= 0
-		% c not feasible
-		dev = 1e8;
-	else
-		[uc, ug] = ces_util_x1(c, g, bb, sig);
-		dev = uc - ug .* R;
-	end
-end
-```
-
-Main routine:
-
-```matlab
-function hh_x1(y, z, R, bb, sig)
-% Solve 2 period hh problem
-	% Set up range of c values
-	ng = 50;
-	cGridV = linspace(0, y, ng);
-	% Calculate deviation for each grid point
-	devV = zeros(1,ng);
-	for ig = 1 : ng
-		devV(ig) = ee_dev_x1(cGridV(ig),y,z,R,bb,sig);
-	end
-	% Pick the smallest deviation
-	[devMin, idxMin] = min(abs(devV));
-	disp(sprintf('c = %f   Dev = %f', cGridV(idxMin), devMin));
-end
+>> hh_example_821(2, 0.5, 1.04, 0.9, 1.5)
+c = 1.224490   Dev = 0.034947
 ```
 
 ## Exercises ##
 
-1. Write a CES utility function that computes $u'(c)$ and $u(c)$.
-2. Write a function that computes the inverse of $u'(c)$.
+1. Write a CES utility function that computes \\(u'(c)\\) and \\(u(c)\\).
+2. Write a function that computes the inverse of \\(u'(c)\\).
 3. Write a test function that checks properties of the utility function:
-	4. The inverse of the inverse equals $u'(c)$.
+	4. The inverse of the inverse equals \\(u'(c)\\).
 	5. Marginal utility is decreasing.
 
 Extra credit: 
 
 1. Package all of that into an object (a user defined data type).
-2. Now write all of this for $u(c)=e^{-\phi c}$.
+2. Now write all of this for \\(u(c)=e^{-\phi c}\\).
 3. In your test function, set things up so that you only need to change a single line of code to test both utility functions (the benefit of OOP in action).
 
 ----------
+
+[encaps]: https://en.wikipedia.org/wiki/Encapsulation_(computer_programming
+
+[global]: http://www.mathworks.com/help/matlab/ref/global.html
+
+[nested]: http://www.mathworks.com/help/matlab/matlab_prog/nested-functions.html?s_tid=gn_loc_drop
