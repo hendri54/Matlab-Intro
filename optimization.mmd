@@ -1,0 +1,63 @@
+# Numerical Optimization
+
+The goal: minimize \\(f(x)\\) subject to \\(l \le x \le u\\) where
+
+* \\(x\\) is a vector
+* \\(l, u\\) are lower and upper bounds
+* \\(f(x)\\) returns a scalar
+
+Two basic approaches: use gradients or gradient-free.
+
+Trade-offs:
+
+* when gradient based algorithms work, they are much faster than gradient-free ones
+* gradient-free algorithms tend to be more robust / more likely to find the minimum
+
+## Gradient-Free Algorithms ##
+
+The leading candidate is [Nelder-Mead](https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method).
+
+The idea can be visualized for the 2D case (\\(x\\) is length 2). Start from a triangle and try to stretch it or flip it over until you find a point that is better than any one previously known. Repeat until you can't make any more progress.
+
+This simple algorithm is surprisingly robust. If speed is not a major issue, this is a good starting point (see [guvGuide][]).
+
+In matlab, the algorithm is [fminsearch][].
+
+## Gradient-Based Algorithms ##
+
+The idea: evaluate enough points to build an approximation of the function to be optimized around the current point (typically quadratic).
+Then try to find a better point around the minimum implied by the approximate function.
+
+In Matlab, one algorithm is [fmincon](http://www.mathworks.com/help/optim/ug/fmincon.html).
+
+Caveats: 
+
+* The vast majority of gradient based algorithms assume that the objective function can be solved to very high precision. This is rarely the case in economic problems.
+* If the objective function is not continuous in \\(x\\), gradient based algorithms tend to have problems. They try to construct function approximations using very small step sizes. This is an issue when models are solved using simulated individual histories, especially with discrete choice.
+* [imfil][] is one of the few (Matlab) solvers that can handle noisy problems.
+
+## Problems ##
+
+There is no way to guarantee that a solver finds a **global** minimum. Especially gradient based algorithms like to get stuck at local minima. The only way of mitigating the problem: run the solver from many starting points (expensive).
+
+## Solver Collections ##
+
+Matlab's own solvers (in the [Optimization toolbox][mToolbox]) are not always state of the art. It is worth experimenting with alternatives.
+
+For Matlab, a good one is [NLOpt][].
+
+A list of solvers is [here](http://users.isy.liu.se/johanl/yalmip/pmwiki.php?n=Solvers.Solvers) and [here](http://solon.cma.univie.ac.at/~neum/glopt/software_g.html).
+
+## Tips and Tricks ##
+
+Before passing your arguments into a solver, run them through a transformation that makes them lie in a fixed interval (e.g. \\([1,2]\\)). 
+Solvers like well-scaled guesses. The transformation makes it easier for them.
+
+---------
+
+[fminsearch]: https://www.google.com/search?q=matlab%20fminsearch
+[guvGuide]: https://www.richmondfed.org/~/media/richmondfedorg/publications/research/economic_quarterly/2011/q3/pdf/guvenen.pdf
+[imfil]: http://www4.ncsu.edu/eos/users/c/ctkelley/www/matlab_darts.html
+[mToolbox]: http://www.mathworks.com/help/optim/index.html
+[NLOpt]: http://ab-initio.mit.edu/wiki/index.php/NLopt
+

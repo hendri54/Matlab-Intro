@@ -18,6 +18,7 @@ Contents:
    matlab_functions
    matlab_oddities
    matlab_plots
+   optimization
    matlab_exercises
    oop
    project_code_organization
