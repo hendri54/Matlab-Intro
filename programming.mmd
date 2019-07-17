@@ -105,6 +105,18 @@ The process is then:
 
 4. But every now and then, randomly switch `dbg` on so that self tests are run (little cost in terms of run time; a lot of gain in terms of confidence in your code).
 
+### Automated Unit Testing
+
+The golden rule:
+
+> When you write a function, write a test function to go with it.
+
+It is hard to overstate the importance of automated testing. It gives you peace of mind. When you change some code, you can simply rerun your test suite and ensure that nothing has been broken.
+
+The key is to fully automate the testing. Your project should have a single function that runs all tests in order.
+
+All programming languages have unit testing frameworks that make it easy to automate this process. Matlab's framework is described [here](https://www.mathworks.com/help/matlab/matlab-unit-test-framework.html).
+
 ### Optimization
 
 Optimization refers to program modifications that speed up execution.

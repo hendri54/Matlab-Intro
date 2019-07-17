@@ -1,5 +1,11 @@
 # Organizing Code for a Complex Model #
 
+Note (2019-July): An updated, cleaner version of this in `Julia` can be found in my `Julia` `github` repo (module `modelLH`).
+
+## Goals ##
+
+1. Be able to solve many different versions of the model. Changes to the model, such as replacing a utility function, should have no effects on most of the code.
+
 ## Setting Parameters ##
 
 The problem: one typically solves several versions of a model. How to ensure that all the right fixed / calibrated parameters are set for each version?
@@ -7,6 +13,39 @@ The problem: one typically solves several versions of a model. How to ensure tha
 Example: A model is solved with different production functions, say Cobb-Douglas or CES.
 
 Here is a possible workflow:
+
+1. Define a `ModelObject` class. It has no properties. It has methods related to setting parameters that are common to all model objects.
+	1. Methods:
+		1. `set_calibrated_params`: copy calibrated parameters from a structure into the object. 
+		2. `set_default_params`: set all potentially calibrated parameters to their default values (for testing)
+2. Define a class for each **abstract model object** (naturally a sub-class of `ModelObject`). Example: `UtilityFunction`.
+3. Define a class for each **specific** model object. Example: `UtilityLog` (naturally a sub-class for the abstract `UtilityFunction`).
+	1. Properties: 
+		1. all fixed and calibrated parameters
+		2. switches that govern its behavior, such as: which parameters are calibrated?
+	2. Methods:
+		1. `calibrated_params`: returns default values and bounds for potentially calibrated parameters.
+		2. `set_switches`: sets switches that are not known when the object is constructed.
+		3. Methods that are specific to the object (e.g. compute marginal utility)
+4. Write a **test** function for each abstract object and run it on each specific object.
+	1. All sub-classes of `UtilityFunction` must have the same methods, so they can be tested using the same code.
+5. Define a class that defines the model.
+	1. It instantiates one object for each model object.
+	2. For each model version, some defaults are overridden. That either means: a different object is constructed (e.g., a different utility function); or switches in the object are set.
+	3. Run `set_switches` on all objects (now that we know all model settings). At this point, the definition of the entire model is neatly contained in this object.
+6. At the start of the calibration loop:
+	4. Make a list of all calibrated parameters. `pvectorLH` does that.
+	1. Make a vector of guesses for the calibrated parameters (`pvectorLH.guess_make`).
+	2. Feed it to the optimizer.
+7. In the calibration loop:
+	1. Recover the parameters from the guesses (`pvectorLH.guess_extract`).
+	2. Copy the calibrated parameters into the model objects (`set_calibrated_params`).
+	3. Solve the model... 
+		4. Note that nothing in the mode code depends on which objects make up the model (e.g. log or CES utility).
+
+It is now trivial to replace a model object, such as a utility function. Simply replace the line in the model definition that calls the constructor for `UtilityLog` with, say, `UtilityCES`. The code automatically updates which parameters must be calibrated and which methods are called when utility needs to be computed.
+
+### Alternative Approach ###
 
 1. Assign each model version a number.
 2. Write a file that sets "named" choices for each model version.
